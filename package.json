@@ -1,0 +1,13 @@
+{
+  "name": "n8n-minio-presigner",
+  "version": "1.0.0",
+  "description": "A microservice to generate MinIO presigned URLs for n8n.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "minio": "^7.1.3"
+  }
+}
