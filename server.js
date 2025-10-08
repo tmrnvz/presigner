@@ -6,7 +6,7 @@ app.use(express.json()); // Gelen JSON body'leri okumak için
 
 const PORT = 3000; // Coolify genellikle bu porta bakar
 
-// 1. MinIO İstemcisini Ayarla (Bu bilgiler artık n8n'de değil, burada)
+// 1. MinIO İstemcisini Ayarla
 const minioClient = new Minio.Client({
   endPoint: 'api.min.synqbrand.com',
   port: 443,
@@ -16,7 +16,14 @@ const minioClient = new Minio.Client({
   pathStyle: true,
 });
 
-// 2. Presigned URL üretecek olan API endpoint'i
+// 2. YENİ EKLENEN SAĞLIK KONTROLÜ (HEALTH CHECK) ENDPOINT'İ
+// Coolify'ın uygulamanın çalışıp çalışmadığını anlaması için.
+// Bu, '/generate-presigned-url' endpoint'inden ÖNCE olmalı.
+app.get('/', (req, res) => {
+  res.status(200).send('OK');
+});
+
+// 3. Presigned URL üretecek olan asıl API endpoint'i
 app.post('/generate-presigned-url', async (req, res) => {
   const { fileName } = req.body;
   const bucketName = 'sosyal-medya';
